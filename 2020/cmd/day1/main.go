@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -11,13 +12,24 @@ func main() {
 	inputList := strings.Split(input, ",")
 
 	for _, stra := range inputList {
-		a, _ := strconv.Atoi(stra)
+		a, erra := strconv.Atoi(stra)
+		if erra != nil {
+			handleError(erra)
+		}
 		for _, strb := range inputList {
-			b, _ := strconv.Atoi(strb)
+			b, errb := strconv.Atoi(strb)
+			if errb != nil {
+				handleError(errb)
+			}
 			if a+b == 2020 {
 				fmt.Printf("%d %d %d\n", a, b, a*b)
 			}
 		}
 	}
 
+}
+
+func handleError(err error) {
+	fmt.Printf("Error occoured: %s\n", err)
+	os.Exit(1)
 }
